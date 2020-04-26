@@ -17,20 +17,18 @@
             <div>
               <img src="../assets/twitter.png" width="80" alt />
             </div>
-            <div id="cardText">
-              " Bitcoin should again outshine most crypto assets in 2020 as the unique and
-              appreciating digital version of gold, the report continues. Bitcoin is winning the adoption race,
-              notably as a store of value in an environment that favors independent quasi-currencies. "
-            </div>
+            <div id="cardText">" {{ this.tweet }} "</div>
             <div class="d-flex" style="padding-left:30px; font-size:30px;">
               <div style="padding-top:8%;">
                 <p>
                   Weight
-                  0.232
+                  {{ this.score }}
                 </p>
               </div>
               <div>
-                <v-icon large color="green" style="font-size:90px;">mdi-arrow-up-thick</v-icon>
+                <v-icon large :color="this.arrow_color" style="font-size:90px;"
+                  >mdi-arrow-{{ this.arrow_direction }}-thick</v-icon
+                >
               </div>
             </div>
           </v-card-text>
@@ -47,7 +45,40 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      tweet: null,
+      score: null,
+      arrow_direction: null,
+      arrow_color: null,
+    };
+  },
+  methods: {
+    async getTweets() {
+      let randomID = Math.floor(Math.random() * 1000) + 1;
+      let data = await axios.get(`http://127.0.0.1:3000/data?id=${randomID}`);
+
+      this.tweet = data.data[0].tweet;
+      this.score = data.data[0].score;
+      if (this.score < 0) {
+        this.arrow_direction = "down";
+        this.arrow_color = "red";
+      } else {
+        this.arrow_direction = "up";
+        this.arrow_color = "green";
+      }
+      setTimeout(() => {
+        this.getTweets();
+      }, 1000);
+    },
+  },
+  created() {
+    this.getTweets();
+  },
+};
 </script>
 
 <style scoped>
