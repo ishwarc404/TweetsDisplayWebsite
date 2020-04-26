@@ -26,9 +26,11 @@
                 </p>
               </div>
               <div>
-                <v-icon large :color="this.arrow_color" style="font-size:90px;"
-                  >mdi-arrow-{{ this.arrow_direction }}-thick</v-icon
-                >
+                <v-icon
+                  large
+                  :color="this.arrow_color"
+                  style="font-size:90px;"
+                >mdi-arrow-{{ this.arrow_direction }}-thick</v-icon>
               </div>
             </div>
           </v-card-text>
@@ -38,14 +40,35 @@
     <br />
     <br />
     <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <div class="d-flex justify-content-center">
-      <v-btn large>GRAPHS</v-btn>
+      <iframe src="http://127.0.0.1:8501" width="1200" height="800">
+        <p>Your browser does not support iframes.</p>
+      </iframe>
     </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Vue from "vue";
+import Trend from "vuetrend";
+
+Vue.use(Trend);
 
 export default {
   data() {
@@ -53,7 +76,7 @@ export default {
       tweet: null,
       score: null,
       arrow_direction: null,
-      arrow_color: null,
+      arrow_color: null
     };
   },
   methods: {
@@ -73,11 +96,11 @@ export default {
       setTimeout(() => {
         this.getTweets();
       }, 1000);
-    },
+    }
   },
   created() {
     this.getTweets();
-  },
+  }
 };
 </script>
 
