@@ -117,4 +117,7 @@ export default {
   padding-left: 20px;
   font-weight: bold;
 }
+iframe{
+  border: none;
+}
 </style>
